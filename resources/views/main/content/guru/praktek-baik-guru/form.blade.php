@@ -4,9 +4,9 @@
 		<div class="card">
 			<div class="card-header bg-main-website text-white">
 				@if (isset($praktek))
-				Edit 
+				Edit
 				@else
-				Tambah 
+				Tambah
 				@endif
 				@if (isset($title))
 				{{$title}}
@@ -38,6 +38,10 @@
 							{{-- <label for="isi">Berita</label> --}}
 							<textarea id="berita" name="berita" rows="40" cols="100" class="form-control">@isset($praktek) {{$praktek->isi}} @endisset</textarea>
 						</div>
+					</div>
+                    <div class="mb-3">
+						<label for="file" class="form-label">Tambah File Gambar</label>
+						<input type="file" class="form-control" id="file" name="file_gambar" accept=".jpg,.jpeg,.png">
 					</div>
 					<div class="mb-3">
 						{{-- <label for="gambar" class="form-label">Gambar *</label> --}}
@@ -81,7 +85,7 @@
 		});
 		$('.pan').pan()
 		console.log(pbgFile);
-		$.each(pbgFile, async function (indexInArray, valueOfElement) { 
+		$.each(pbgFile, async function (indexInArray, valueOfElement) {
 			await appendDetail(indexInArray,valueOfElement.id_praktek_baik_guru_file,valueOfElement.original_name)
 			var myAlert = document.getElementById(`alert_file_${indexInArray}`)
 			myAlert.addEventListener('closed.bs.alert', function () {
@@ -111,12 +115,12 @@
 		btn = $('#btnOutPut').attr('data-big',URL.createObjectURL(event.target.files[0]))
 		$('#outPut').addClass('img-thumbnail')
 	}
-	
+
 	var berita = CKEDITOR.replace('berita', {
 		// uiColor: '#CCEAEE'
 		toolbarCanCollapse:false,
 	});
-	
+
 	$('.btnSimpan').click((e) => {
 		e.preventDefault()
 		var data = new FormData($('#formBerita')[0])
