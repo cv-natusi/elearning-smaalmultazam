@@ -126,23 +126,23 @@ class PraktekBaikGuruController extends Controller
 						}
 					}
 				}
-                if(!empty($request->file_gambar)) {
-                    $praktekGambar = new PraktekBaikGuruGambar;
-                    $fileGambar = $request->file_gambar;
-                    // $ukuranFile1 = filesize($value);
-                    $ext_file2 = $fileGambar->getClientOriginalExtension();
-                    $nama_file2 = $fileGambar->getClientOriginalName();
-                    $filenameGambar = "Praktek" . date('Ymd-His') . "_" . "." . $ext_file2;
-                    $temp_foto1 = 'uploads/praktek/gambar/';
-                    $proses1 = $fileGambar->move($temp_foto1, $filenameGambar);
-                    $praktekGambar->praktek_baik_guru_id = $praktek->id_praktek_baik_guru;
-                    $praktekGambar->original_name = $nama_file2;
-                    $praktekGambar->file_name = $filenameGambar;
-                    if (!$praktekGambar->save()) {
-                        DB::rollBack();
-                        return ['code' => 201, 'status' => 'error', 'Gagal.'];
-                    }
-                }
+				if(!empty($request->file_gambar)) {
+						$praktekGambar = new PraktekBaikGuruGambar;
+						$fileGambar = $request->file_gambar;
+						// $ukuranFile1 = filesize($value);
+						$ext_file2 = $fileGambar->getClientOriginalExtension();
+						$nama_file2 = $fileGambar->getClientOriginalName();
+						$filenameGambar = "Praktek" . date('Ymd-His') . "_" . "." . $ext_file2;
+						$temp_foto1 = 'uploads/praktek/gambar/';
+						$proses1 = $fileGambar->move($temp_foto1, $filenameGambar);
+						$praktekGambar->praktek_baik_guru_id = $praktek->id_praktek_baik_guru;
+						$praktekGambar->original_name = $nama_file2;
+						$praktekGambar->file_name = $filenameGambar;
+						if (!$praktekGambar->save()) {
+								DB::rollBack();
+								return ['code' => 201, 'status' => 'error', 'Gagal.'];
+						}
+				}
 				if (!empty($request->id)) {
 					foreach ($pbgFileGet as $key => $value) {
 						if (file_exists('uploads/praktek/' . $value->file_name)) {
