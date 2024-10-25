@@ -24,6 +24,7 @@ class PraktekBaikGuru extends Model
 		return PraktekBaikGuru::select('*')->selectRaw('id_praktek_baik_guru as id_berita, isi, judul, gambar, created_at as tanggal')
 			->where('status', true)
 			->with('praktek_baik_guru_file')
+			->with('praktek_baik_guru_gambar')
 			->orderBy('id_praktek_baik_guru', 'DESC')
 			->paginate(8);
 	}
@@ -32,6 +33,7 @@ class PraktekBaikGuru extends Model
 		return PraktekBaikGuru::select('*')->selectRaw('id_praktek_baik_guru as id_berita, isi, judul, gambar, created_at as tanggal')
             ->where('id_praktek_baik_guru',$id)
 			->with('praktek_baik_guru_file')
+			->with('praktek_baik_guru_gambar')
 			->where('status', true)
 			->first();
 	}
