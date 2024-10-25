@@ -17,7 +17,7 @@ class PraktekBaikGuru extends Model
 	}
 
     public function praktek_baik_guru_gambar() {
-        return $this->hasMany(PraktekBaikGuruGambar::class, 'praktek_baik_guru_id', 'id_praktek_baik_guru');
+        return $this->hasOne(PraktekBaikGuruGambar::class, 'praktek_baik_guru_id', 'id_praktek_baik_guru');
     }
 
     public static function getPraktekBaikGuruPaginate(){
