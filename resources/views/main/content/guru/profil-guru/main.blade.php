@@ -145,7 +145,9 @@ $tambah = true;
 								<div class="col-6 p-2 gradient-green-yellow mb-2">
 									<label for="">Tugas Tambahan</label>
 								</div>
-								<div class="col-6"></div>
+								<div class="col-6">
+                                    <button type="button" class="btn btn-success float-end btnTambahTugasTambahan" onclick="addTugasTambahan()"><i class='bx bx-plus'></i> Tambah</button>
+                                </div>
 								{{-- <div class="col-10">
 									<div class="mb-3">
 										<label for="tugas" class="form-label">Nama Tugas</label>
@@ -167,12 +169,14 @@ $tambah = true;
 											</tr>
 										</thead>
 										<tbody>
+                                            {{-- @dd($tugas_tambahan) --}}
 											@foreach ($tugas_tambahan as $item)
 											<tr>
 												<td>{{$loop->index+1}}</td>
-												<td>{{$item->nama_tugas}}</td>
+												<td>{{$item->nama_tugas_tambahan}}</td>
 												<td>
-													-
+													<a onclick="editTugasTambahan({{ $item->id_tugas_tambahan }})" class="btn btn-success"><i class='bx bx-edit-alt mx-1'></i></a>
+													<a onclick="deleteTugasTambahan({{ $item->id_tugas_tambahan }})" class="btn btn-danger"><i class='bx bx-trash mx-1'></i></a>
 												</td>
 											</tr>
 											@endforeach
@@ -186,7 +190,7 @@ $tambah = true;
 					<div class="d-flex gap-2">
 						<button class="btn btn-primary px-4 btnSimpan">SIMPAN</button>
 						<button type="button" class="btn btn-danger btnModalPassword" data-toggle="modal" data-target="#ubahPasswordModal">
-							<i class='bx bx-key'></i> 
+							<i class='bx bx-key'></i>
 							Ubah Password
 						</button>
 					</div>
@@ -228,6 +232,37 @@ $tambah = true;
 		</div>
 	</div>
 </div>
+
+{{-- Modal tambah tugas tambahan --}}
+{{-- <div class="modal fade" id="tambahTugasTambahan" tabindex="-1" aria-labelledby="tambahTugasTambahanModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="tambahTugasTambahanModalLabel">TAMBAH TUGAS TAMBAHAN</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+                <form id="formSaveTugas">
+                    <input type="hidden" name="id_tugas_tambahan" value="">
+                    <div class="row">
+                        <div class="col">
+                            <label for="password_baru" class="form-label">Tugas Tambahan *</label>
+							<div class="input-group">
+								<input type="text" class="form-control border-end-0" id="nama_tugas_tambahan" name="nama_tugas_tambahan" placeholder="Nama Tugas" @if (!empty())
+                                    value=""
+                                @endif>
+							</div>
+                        </div>
+                    </div>
+                </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary btnSimpanTugas">SIMPAN</button>
+			</div>
+		</div>
+	</div>
+</div> --}}
+<div class="modal-page"></div>
 @endsection
 
 @push('script')
@@ -242,6 +277,14 @@ $tambah = true;
 		backdrop: 'static',
 		keyboard: false
 	})
+
+    // var modalTugasTambahan = new bootstrap.Modal(document.getElementById('tambahTugasTambahan'), {
+	// 	backdrop: 'static',
+	// 	keyboard: false
+	// })
+    $('#tambahTugasTambahan').on('hidden.bs.modal', function () {
+        location.reload();
+    });
 	$('.pan').pan()
 	$(document).ready(function () {
 		$('.select2').select2({
@@ -311,6 +354,10 @@ $tambah = true;
 		modalPassword.show()
 	})
 
+    // $('.btnTambahTugasTambahan').click((e) => {
+	// 	modalTugasTambahan.show()
+	// })
+
 	function ubahPassword(ini){
 		const type = $(ini).prev().attr('type')
 		// const type = $('#input').attr('type')
@@ -324,6 +371,79 @@ $tambah = true;
 		$(ini).children('i').removeClass('bx-hide')
 		$(ini).children('i').addClass('bx-show')
 	}
+
+    function addTugasTambahan(){
+        $.post("{!! route('guru.profilGuru.formTugasTambahan') !!}").done(function(data){
+            if(data.status == 'success'){
+                $('.modal-page').html('');
+                $('.modal-page').html(data.content).fadeIn();
+                $('#tambahTugasTambahan').modal('show');
+            } else {
+                console.log('gagal memuat modal');
+            }
+        });
+    }
+
+    function editTugasTambahan(id_tugas_tambahan) {
+        var url = '{{route("guru.profilGuru.formTugasTambahan")}}';
+        $.post(url, {id_tugas_tambahan: id_tugas_tambahan})
+        .done(function(data) {
+            if(data.status == 'success'){
+                $('.modal-page').html('');
+                $('.modal-page').html(data.content).fadeIn();
+                $('#tambahTugasTambahan').modal('show');
+            } else {
+                console.log('gagal memuat modal');
+            }
+        })
+    }
+
+    function deleteTugasTambahan(id) {
+        Swal.fire({
+            title: "Apakah Anda Yakin?",
+            text: "Data Tersebut Akan Dihapus!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, Hapus!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var url = "{!! route('guru.profilGuru.deleteTugasTambahan') !!}";
+                $.post(url, {id:id})
+                .done(function(data){
+                    console.log(data);
+                    if(data.code == 200){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1200
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Whoops',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1300,
+                        })
+                    }
+                    location.reload()
+                })
+                .fail(() => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Whoops..',
+                        text: 'Terjadi kesalahan silahkan ulangi kembali',
+                        showConfirmButton: false,
+                        timer: 1300,
+                    })
+                })
+            }
+        });
+    }
 
 	$('.btnSimpanPassword').click((e) => {
 		e.preventDefault()

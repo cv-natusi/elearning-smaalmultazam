@@ -252,6 +252,9 @@ Route::middleware(['auth'])->group(function () {
 					Route::get('/', 'main')->name('main');
 					Route::post('/save', 'save')->name('save');
 					Route::post('ubah-password', 'ubahPassword')->name('ubahPassword');
+					Route::post('form-tugas-tambahan', 'formTugasTambahan')->name('formTugasTambahan');
+					Route::post('save-tugas-tambahan', 'saveTugasTambahan')->name('saveTugasTambahan');
+					Route::post('delete-tugas-tambahan', 'deleteTugasTambahan')->name('deleteTugasTambahan');
 				});
 			# END PROFIL GURU
 
