@@ -34,13 +34,15 @@ class ProfilGuruController extends Controller
 		$data['tugas_tambahan'] = TugasTambahan::where('guru_id',Auth::user()->id)->get();
 		if (Auth::user()->piket) {
 			$data['tugas_tambahan'][] = (object)[
-				'nama_tugas' => 'Guru Piket'
+                'id_tugas_tambahan' => null,
+				'nama_tugas_tambahan' => 'Guru Piket'
 			];
 		}
 		if ($kelas = Kelas::where('guru_id',$data['guru']->id_guru)->where('guru_id','!=',null)->get()) {
 			foreach ($kelas as $key => $value) {
 				$data['tugas_tambahan'][] = (object)[
-					'nama_tugas' => 'Wali Kelas '.$value->nama_kelas
+                    'id_tugas_tambahan' => null,
+					'nama_tugas_tambahan' => 'Wali Kelas '.$value->nama_kelas
 				];
 			}
 		}
