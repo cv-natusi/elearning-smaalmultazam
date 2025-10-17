@@ -27,6 +27,11 @@
 								<th>No</th>
 								<th>Judul</th>
 								<th>Nama Guru</th>
+								<th>Kelas</th>
+								<th>Tahun Ajaran</th>
+								<th>Semester</th>
+								<th>File</th>
+								<th>Link</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -53,6 +58,8 @@
 	$(document).ready( async () => {
 		await dataTable()
 	})
+
+	let table; // Variabel untuk menyimpan instance DataTable
 	
 	async function dataTable() {
 		const loading = '<div class=spinner-grow text-primary" role="status"> <span class="visually-hidden">Loading...</span></div>'
@@ -67,7 +74,7 @@
 		<'row mt-2'<'col-sm-5'i><'col-sm-7'p>>
 		`
 		
-		await $('#dataTable').DataTable({
+		table = $('#dataTable').DataTable({
 			sDom: sDom,
 			stateSave: false,
 			scrollX: true,
@@ -98,6 +105,11 @@
 				}},
 				{data:'judul', name:'judul'},
 				{data:'nama_guru', name:'nama_guru'},
+				{data:'kelas.nama_kelas', name:'nama_kelas'},
+				{data:'tahun_ajaran.nama_tahun_ajaran', name:'nama_tahun_ajaran'},
+				{data:'semester', name:'semester'},
+				{data:'file', name:'file'},
+				{data:'link', name:'link'},
 				{data:'actions', name:'actions'}
 			],
 		});
