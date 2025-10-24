@@ -30,6 +30,7 @@
 								<th>Guru Pengampu</th>
 								<th>Tanggal Berlaku Soal</th>
 								<th>Jumlah Soal</th>
+								<th>File Soal</th>
 								<th>Nilai KKM</th>
 								<th>Aksi</th>
 							</tr>
@@ -121,6 +122,7 @@
 				{data:'nama_guru', name:'nama_guru'},
 				{data:'tanggal', name:'tanggal'},
 				{data:'jumlah_soal', name:'jumlah_soal'},
+				{data:'file_soal', name:'file_soal'},
 				{data:'kkm', name:'kkm'},
 				{data:'actions', name:'actions'}
 			],

@@ -44,6 +44,7 @@ class Soal extends Model
 		$save->selesai_pengerjaan = $request->selesai_pengerjaan;
 		$save->jumlah_soal = $request->jumlah_soal;
 		$save->pendahuluan = $request->pendahuluan;
+		$save->file_soal = $request->file_soal;
 		$save->jenis = $request->jenis;
 		$save->durasi = $request->durasi;
 		$save->user_id = Auth::user()->id;

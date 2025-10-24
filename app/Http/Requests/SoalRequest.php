@@ -35,10 +35,11 @@ class SoalRequest extends FormRequest
 			'mulai_pengerjaan' => 'required',
 			'selesai_pengerjaan' => 'required',
 			'jumlah_soal' => 'required|min:1|max:300',
-			'pendahuluan' => 'required',
+			// 'pendahuluan' => 'required',
 			'jenis' => 'required|in:1,2',
 			'durasi' => 'required',
 			// 'status' => 'required',
+			'file_soal' => 'nullable|file|mimes:pdf,docx|max:10240',
 		];
 	}
 
@@ -57,7 +58,7 @@ class SoalRequest extends FormRequest
 			'jumlah_soal.max' => 'Maksimal Jumlah Soal 300',
 			'kkm.min' => 'Minimal KKM 0',
 			'kkm.max' => 'Maksimal KKM 100',
-			'pendahuluan.required' => 'Pendahuluan Wajib Diisi',
+			// 'pendahuluan.required' => 'Pendahuluan Wajib Diisi',
 			'durasi.required' => 'Durasi Wajib Diisi',
 			// 'status.required' => 'Status Wajib Diisi',
 		];

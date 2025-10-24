@@ -10,7 +10,8 @@
 				Soal Elearning
 			</div>
 			<div class="card-body">
-				<form id="formSoal">
+				<form id="formSoal" enctype="multipart/form-data">
+					@csrf
 					<input type="hidden" name="id" id="id" @isset($soal) value="{{$soal->id_soal}}" @endisset>
 					<input type="hidden" name="jenis" @if(isset($soal)) value="{{$soal->jenis}}" @else value="1" @endif>
 					<div class="mb-3">
@@ -91,9 +92,26 @@
 								<input class="form-control" type="number" name="durasi" id="durasi" @isset($soal) value="{{$soal->durasi}}" @endisset>
 							</div>
 						</div>
-						<div class="mb-3">
+						{{-- <div class="mb-3">
 							<label for="pendahuluan" class="form-label">Pendahuluan *</label>
 							<textarea name="pendahuluan" id="pendahuluan" cols="30" rows="10">@isset($soal) {{$soal->pendahuluan}} @endisset</textarea>
+						</div> --}}
+						<div class="mb-3">
+							<label class="form-label" for="soal_file">Upload Soal (Hanya .docx, .pdf)</label>
+							<input class="form-control" type="file" name="soal_file" id="soal_file" accept=".docx,.pdf">
+
+							@isset($soal)
+								@if($soal->file_soal)
+									<div class="mt-2">
+										<a href="{{ asset('storage/' . $soal->file_soal) }}" target="_blank" class="btn btn-sm btn-secondary">
+											Lihat File Saat Ini
+										</a>
+										<small class="d-block text-muted mt-1">
+											*Abaikan input file di atas jika tidak ingin mengubah file.
+										</small>
+									</div>
+								@endif
+							@endisset
 						</div>
 					</div>
 					<hr>
@@ -134,10 +152,10 @@
 		});
 	})
 
-	var pendahuluan = CKEDITOR.replace('pendahuluan', {
-		// uiColor: '#CCEAEE'
-		toolbarCanCollapse:false,
-	});
+	// var pendahuluan = CKEDITOR.replace('pendahuluan', {
+	// 	// uiColor: '#CCEAEE'
+	// 	toolbarCanCollapse:false,
+	// });
 
 	$('.btnKembali').click((e)=>{
 		e.preventDefault()
@@ -148,8 +166,8 @@
 	$('.btnSimpan').click((e) => {
 		e.preventDefault()
 		var data = new FormData($('#formSoal')[0])
-		var pendahuluan = CKEDITOR.instances.pendahuluan.getData();
-		data.append('pendahuluan',pendahuluan);
+		// var pendahuluan = CKEDITOR.instances.pendahuluan.getData();
+		// data.append('pendahuluan',pendahuluan);
 		$('.btnSimpan').attr('disabled',true).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>LOADING...')
 		$.ajax({
 				url: '{{route("guru.soalTulis.createSoal")}}',
