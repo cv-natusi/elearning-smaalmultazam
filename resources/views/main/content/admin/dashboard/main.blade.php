@@ -60,4 +60,58 @@
 			</div>
 		</div>
 	</div>
+	<div class="container">
+		<div class="row">
+			<div class="card radius-10">
+				<div class="card-body text-center">
+					<h5 style="text-align: center;" class="my-1">Grafik Pengunjung 30 Hari Terakhir</h5>
+			
+					<div style="width: 90%; margin: auto;">
+						<canvas id="visitorChart"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection
+
+@push('script')
+	<script>
+		const labels = @json($labels);
+        const guestData = @json($guestData);
+        const userData = @json($userData);
+
+        const chartData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Pengunjung Login (User)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1.5,
+                    data: userData,
+                    fill: true,
+                    tension: 0.1
+                }
+            ]
+        };
+
+        const config = {
+            type: 'line',
+            data: chartData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+            }
+        };
+
+        const myChart = new Chart(
+            document.getElementById('visitorChart'),
+            config
+        );
+	</script>
+@endpush
