@@ -284,14 +284,14 @@ if (!isset($title)) {
 					<div class="menu-title">Jurnal Guru</div>
 				</a>
 			</li>
-			<li class="{{ ($title == 'Praktek Baik Guru') ? 'mm-active' : ''}}">
+			<!-- <li class="{{ ($title == 'Praktek Baik Guru') ? 'mm-active' : ''}}">
 				<a href="{{route('guru.praktekBaikGuru.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
 					<div class="menu-title">Praktek Baik Guru</div>
 				</a>
-			</li>
+			</li> -->
 			@if (Auth::user()->piket)
 				<li class="menu-label">Guru Piket</li>
 				<li class="{{ ($title == 'Jurnal Semua Guru') ? 'mm-active' : ''}}">
