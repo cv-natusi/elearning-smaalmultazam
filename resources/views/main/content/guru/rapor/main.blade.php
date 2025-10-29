@@ -6,12 +6,12 @@
 		<div class="card">
 			<div class="card-body">
 				<label class="form-label" for="rapor">E-RAPOR</label>
-				<select class="form-select select2" name="id" id="id">
+				{{-- <select class="form-select select2" name="id" id="id">
 					<option value="">-PILIH-</option>
 					@foreach ($rapor as $item)
 						<option value="{{$item->id_spreadsheet_share}}">{{$item->judul}}</option>
 					@endforeach
-				</select>
+				</select> --}}
 			</div>
 		</div>
 	</div>
@@ -19,7 +19,8 @@
 		<div class="card">
 			<div class="card-body">
 				<div class="p-1">
-					<iframe id="raporArea" class="w-100 min-vh-100" src=""></iframe>
+					{{-- <iframe id="raporArea" class="w-100 min-vh-100" src=""></iframe> --}}
+                    <iframe id="raporArea" class="w-100 min-vh-100" src="http://103.210.35.76:2023/login"></iframe>
 				</div>
 			</div>
 		</div>
@@ -27,7 +28,7 @@
 </div>
 @endsection
 
-@push('script')
+{{-- @push('script')
 <script src="{{ asset('admin/assets/plugins/select2/js/select2.min.js') }}"></script>
 	<script>
 		var rapor = {{Illuminate\Support\Js::from($rapor)}}
@@ -47,4 +48,4 @@
 			}, 1000);
 		})
 	</script>
-@endpush
+@endpush --}}
