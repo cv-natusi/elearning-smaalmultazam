@@ -14,9 +14,18 @@
 					@csrf
 					<input type="hidden" name="id" id="id" @isset($soal) value="{{$soal->id_soal}}" @endisset>
 					<input type="hidden" name="jenis" @if(isset($soal)) value="{{$soal->jenis}}" @else value="1" @endif>
-					<div class="mb-3">
-						<label for="judul_soal" class="form-label">Judul Soal *</label>
-						<input type="text" class="form-control" name="judul_soal" id="judul_soal" placeholder="Judul Materi" @isset($soal) value="{{$soal->judul_soal}}" @endisset>
+					<div class="row mb-3">
+						<div class="col col-md-9">
+							<label for="judul_soal" class="form-label">Judul Soal *</label>
+							<input type="text" class="form-control" name="judul_soal" id="judul_soal" placeholder="Judul Materi" @isset($soal) value="{{$soal->judul_soal}}" @endisset>
+						</div>
+						<div class="col col-md-3">
+							<label for="jenis_file" class="form-label">Jenis</label>
+							<select name="jenis_file" id="jenis_file" class="form-select">
+								<option value="soal" @isset($soal) @if ($soal->jenis_file=='soal') selected @endif @endisset>Soal</option>
+								<option value="kisi" @isset($soal) @if ($soal->jenis_file=='kisi') selected @endif @endisset>Kisi-kisi</option>
+							</select>
+						</div>
 					</div>
 					<div class="row">
 						<div class="col-2">
@@ -68,28 +77,30 @@
 								<input class="form-control" type="number" name="kkm" id="kkm" placeholder="0"  @isset($soal) value="{{$soal->kkm}}" @endisset>
 							</div>
 						</div>
-						<div class="col-3">
-							<div class="mb-3">
-								<label for="mulai_pengerjaan" class="form-label">Tanggal Mulai *</label>
-								<input class="form-control date-time date-start mb-2" type="text" name="mulai_pengerjaan" id="mulai_pengerjaan" @isset($soal) value="{{$soal->mulai_pengerjaan}}" @endisset>
+						<div class="row soal-container">
+							<div class="col-3">
+								<div class="mb-3">
+									<label for="mulai_pengerjaan" class="form-label">Tanggal Mulai *</label>
+									<input class="form-control date-time date-start mb-2" type="text" name="mulai_pengerjaan" id="mulai_pengerjaan" @isset($soal) value="{{$soal->mulai_pengerjaan}}" @endisset>
+								</div>
 							</div>
-						</div>
-						<div class="col-3">
-							<div class="mb-3">
-								<label for="selesai_pengerjaan" class="form-label">Tanggal Selesai *</label>
-								<input class="form-control date-time date-end mb-2" type="text" name="selesai_pengerjaan" id="selesai_pengerjaan" @isset($soal) value="{{$soal->selesai_pengerjaan}}" @endisset>
+							<div class="col-3">
+								<div class="mb-3">
+									<label for="selesai_pengerjaan" class="form-label">Tanggal Selesai *</label>
+									<input class="form-control date-time date-end mb-2" type="text" name="selesai_pengerjaan" id="selesai_pengerjaan" @isset($soal) value="{{$soal->selesai_pengerjaan}}" @endisset>
+								</div>
 							</div>
-						</div>
-						<div class="col-3">
-							<div class="mb-3">
-								<label for="jumlah_soal" class="form-label">Jumlah Soal *</label>
-								<input class="form-control" type="number" name="jumlah_soal" id="jumlah_soal" @isset($soal) value="{{$soal->jumlah_soal}}" @endisset>
+							<div class="col-3">
+								<div class="mb-3">
+									<label for="jumlah_soal" class="form-label">Jumlah Soal *</label>
+									<input class="form-control" type="number" name="jumlah_soal" id="jumlah_soal" @isset($soal) value="{{$soal->jumlah_soal}}" @endisset>
+								</div>
 							</div>
-						</div>
-						<div class="col-3">
-							<div class="mb-3">
-								<label for="durasi" class="form-label">Durasi Pengerjaan (Menit) *</label>
-								<input class="form-control" type="number" name="durasi" id="durasi" @isset($soal) value="{{$soal->durasi}}" @endisset>
+							<div class="col-3">
+								<div class="mb-3">
+									<label for="durasi" class="form-label">Durasi Pengerjaan (Menit) *</label>
+									<input class="form-control" type="number" name="durasi" id="durasi" @isset($soal) value="{{$soal->durasi}}" @endisset>
+								</div>
 							</div>
 						</div>
 						{{-- <div class="mb-3">
@@ -118,9 +129,10 @@
 					<div class="d-flex gap-2">
 						<button class="btn btn-secondary px-4 btnKembali">KEMBALI</button>
 						@if(isset($soal))
-						<button class="btn btn-warning px-4 btnLanjutkan text-white me-0 ms-auto"><i class='bx bx-book-content'></i> PEMBUATAN SOAL</button>
+						{{-- <button class="btn btn-warning px-4 btnLanjutkan text-white me-0 ms-auto"><i class='bx bx-book-content'></i> PEMBUATAN SOAL</button> --}}
+						<button class="btn btn-primary px-4 btnUpdate">SIMPAN</button>
 						@else
-						<button class="btn btn-primary px-4 btnSimpan">@if (isset($soal)) SIMPAN @else BUAT SOAL @endif</button>
+						<button class="btn btn-primary px-4 btnSimpan">@if (isset($soal)) SIMPAN @else BUAT @endif</button>
 						@endif
 					</div>
 				</form>
@@ -132,6 +144,28 @@
 <script src="{{ asset('admin/assets/plugins/select2/js/select2.min.js') }}"></script>
 <script>
 	$(document).ready(function () {
+		window.updateSoalUrlTemplate = "{{ route('guru.soalTulis.update', ['id_soal' => ':id']) }}";
+
+        function toggleSoalFields() {
+            var jenisTerpilih = $('#jenis_file').val();
+
+            if (jenisTerpilih === 'soal') {
+                $('.soal-container').show();
+            } else {
+                $('.soal-container').hide();
+            }
+        }
+
+        toggleSoalFields();
+
+        $('#jenis_file').on('change', function() {
+            toggleSoalFields();
+
+            if ($(this).val() !== 'soal') {
+                $('.soal-container :input').val('');
+            }
+        });
+
 		var startDate = flatpickr($(".date-start"),{
 			enableTime: true,
 			minDate: "today",
@@ -149,6 +183,96 @@
 		})
 		$('.select2').select2({
 			theme: 'bootstrap-5',
+		});
+
+		$(document).on('click', '.btnUpdate', function(e) {
+			e.preventDefault();
+			
+			let form = $('#formSoal')[0];
+			
+			let formData = new FormData(form);
+			
+			let soal_id = $('#id').val();
+			
+			if (!window.updateSoalUrlTemplate) {
+				console.error('Error: URL template untuk update soal tidak ditemukan.');
+				Swal.fire('Error Konfigurasi', 'URL endpoint tidak terdefinisi.', 'error');
+				return; 
+			}
+			let url = window.updateSoalUrlTemplate.replace(':id', soal_id);
+			
+			const csrfToken = $('meta[name="csrf-token"]').attr('content');
+			
+			Swal.fire({
+				title: 'Menyimpan perubahan...',
+				text: 'Mohon tunggu sebentar.',
+				allowOutsideClick: false,
+				didOpen: () => {
+					Swal.showLoading();
+				}
+			});
+			
+			$.ajax({
+				url: url,
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+				headers: {
+					'X-CSRF-TOKEN': csrfToken
+				},
+				success: function(response) {
+					Swal.close();
+
+					if (response.code == 200) {
+						Swal.fire({
+							icon: 'success',
+							title: 'Berhasil',
+							text: response.message,
+							showConfirmButton: false,
+							timer: 1200
+						})
+						setTimeout(()=>{
+							$('.other-page').fadeOut(()=>{
+								$('#datatabel').DataTable().ajax.reload()
+								location.reload()
+							})
+						}, 1100);
+						$('#soalModal').modal('hide');
+						$('#namaTableAnda').DataTable().ajax.reload();
+					} else {
+						Swal.fire(
+							'Gagal!',
+							response.message || 'Terjadi kesalahan.',
+							'error'
+						);
+					}
+				},
+				error: function(xhr) {
+					Swal.close();
+					
+					if (xhr.status === 422) {
+						let errors = xhr.responseJSON.errors;
+						let errorMessages = '';
+						$.each(errors, function(key, value) {
+							errorMessages += `<li>${value[0]}</li>`;
+						});
+						
+						Swal.fire(
+							'Validasi Gagal!',
+							`<ul class="text-start">${errorMessages}</ul>`,
+							'error'
+						);
+					} else {
+						Swal.fire(
+							'Error Server!',
+							'Gagal menyimpan data. Silakan coba lagi.',
+							'error'
+						);
+					}
+					console.error(xhr.responseText);
+				}
+			});
 		});
 	})
 

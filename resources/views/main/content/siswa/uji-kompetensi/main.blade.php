@@ -60,6 +60,31 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="downloadModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      
+      <div class="modal-header" style="background-color: #4A89DC; color: white;">
+        <h5 class="modal-title" id="downloadModalLabel">Soal E-Learning</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body">
+        <p class="mb-1" style="font-size: 0.9rem; font-weight: 600;">Judul Soal</p>
+        <h4 id="modalJudulSoal"></h4>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">KEMBALI</button>
+        <button type="button" class="btn btn-primary" id="btnDownloadModal">
+          <i class='bx bx-download'></i> Download
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
 @endsection
 
 @push('script')
@@ -138,5 +163,43 @@
 	$('.btn-close').click( _ => {
 		$('#btn-kerjakan').data('id','') // Reset data id ketika modal di close
 	})
+
+	const downloadModalElement = document.getElementById('downloadModal');
+	const downloadModal = new bootstrap.Modal(downloadModalElement);
+
+	function downloadSoal(judul_soal, file_soal) {
+		console.log("Membuka modal untuk:", [judul_soal, file_soal]);
+
+		document.getElementById('modalJudulSoal').innerText = judul_soal;
+		
+		document.getElementById('btnDownloadModal').setAttribute('data-file', file_soal);
+		
+		downloadModal.show();
+	}
+
+	
+	document.getElementById('btnDownloadModal').addEventListener('click', function() {
+		
+		const fileUrl = this.getAttribute('data-file');
+		
+		const fileName = fileUrl.split('/').pop();
+
+		if (fileUrl) {
+			console.log('Mulai mengunduh:', fileUrl);
+			
+			const a = document.createElement('a');
+			a.href = fileUrl;
+			a.download = fileName;
+			
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			
+			downloadModal.hide();
+
+		} else {
+			console.error('File URL tidak ditemukan!');
+		}
+	});
 </script>
 @endpush

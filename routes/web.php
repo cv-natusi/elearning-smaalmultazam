@@ -296,6 +296,7 @@ Route::middleware(['auth'])->group(function () {
 					Route::post('/store-pertanyaan-file', 'storePertanyaanFile')->name('storePertanyaanFile');
 					Route::post('/show-nilai', 'showNilai')->name('showNilai');
 					Route::post('/preview', 'preview')->name('preview');
+					Route::post('/update/{id_soal}', 'updateSoal')->name('update');
 				});
 			# END SOAL TULIS
 

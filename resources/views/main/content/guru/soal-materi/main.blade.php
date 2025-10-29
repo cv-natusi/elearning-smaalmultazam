@@ -26,6 +26,7 @@
 							<tr>
 								<th>No</th>
 								<th>Judul Soal</th>
+								<th>Jenis</th>
 								<th>Nama Mata Pelajaran</th>
 								<th>Guru Pengampu</th>
 								<th>Tanggal Berlaku Soal</th>
@@ -118,6 +119,7 @@
 					return `<p class="m-0 p-1">${data}</p>`
 				}},
 				{data:'judul_soal', name:'judul_soal'},
+				{data:'jenis_file_custom', name:'jenis_file_custom'},
 				{data:'nama_mapel', name:'nama_mapel'},
 				{data:'nama_guru', name:'nama_guru'},
 				{data:'tanggal', name:'tanggal'},

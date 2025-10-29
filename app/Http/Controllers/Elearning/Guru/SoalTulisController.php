@@ -46,7 +46,11 @@ class SoalTulisController extends Controller
 				})
 				->get();
 			return DataTables::of($data)->addIndexColumn()->addColumn('tanggal', function ($row) {
-				return date('H:i:s d F Y', strtotime($row->mulai_pengerjaan)) . '<br>S/D<br>' . date('H:i:s d F Y', strtotime($row->selesai_pengerjaan));
+				if($row->mulai_pengerjaan && $row->selesai_pengerjaan){
+					return date('H:i:s d F Y', strtotime($row->mulai_pengerjaan)) . '<br>S/D<br>' . date('H:i:s d F Y', strtotime($row->selesai_pengerjaan));
+				}else{
+					return '-';
+				}
 			})->addColumn('nama_mapel', function ($row) {
 				$mapel = '-';
 				if ($row->mata_pelajaran) {
@@ -65,6 +69,13 @@ class SoalTulisController extends Controller
 					$judul .= $row->judul_soal ? $row->judul_soal : '-';
 				}
 				return $judul;
+			})->addColumn('jenis_file_custom', function ($row) {
+				if($row->jenis_file == 'kisi'){
+					$jenis = 'Kisi-kisi';
+				}else{
+					$jenis = 'Soal';
+				}
+				return $jenis;
 			})->addColumn('file_soal', function($row){
 				if($row->file_soal){
 					return "<a href='".asset('storage/' . $row->file_soal)." 'target='_blank' class='btn btn-sm btn-secondary'>Lihat File</a>";
@@ -74,12 +85,13 @@ class SoalTulisController extends Controller
 			})->addColumn('nama_guru', function ($row) {
 				return $row->guru ? $row->guru->nama : '-';
 			})->addColumn('actions', function ($row) {
-				$html = "<button onclick='previewSoal($row->id_soal)' class='btn btn-primary p-2'><i class='bx bx-spreadsheet mx-1'></i></button>";
-				if ($row->tampilkan_nilai) {
-					$html .= "<button onclick='hiddenNilai($row->id_soal)' class='btn ms-1 btn-secondary p-2'><i class='bx bx-low-vision mx-1'></i></button>";
-				} else {
-					$html .= "<button onclick='hiddenNilai($row->id_soal)' class='btn ms-1 btn-dark btn-purple p-2'><i class='bx bx-low-vision mx-1'></i></button>";
-				}
+				$html = "";
+				// $html = "<button onclick='previewSoal($row->id_soal)' class='btn btn-primary p-2'><i class='bx bx-spreadsheet mx-1'></i></button>";
+				// if ($row->tampilkan_nilai) {
+				// 	$html .= "<button onclick='hiddenNilai($row->id_soal)' class='btn ms-1 btn-secondary p-2'><i class='bx bx-low-vision mx-1'></i></button>";
+				// } else {
+				// 	$html .= "<button onclick='hiddenNilai($row->id_soal)' class='btn ms-1 btn-dark btn-purple p-2'><i class='bx bx-low-vision mx-1'></i></button>";
+				// }
 				$html .= "<button onclick='tambahSoal($row->id_soal)' class='btn ms-1 btn-primary p-2'><i class='bx bx-edit-alt mx-1'></i></button>";
 				$html .= "<button onclick='hapusSoal($row->id_soal)' class='btn ms-1 btn-danger p-2'><i class='bx bx-trash mx-1'></i></button>";
 				return $html;
@@ -461,5 +473,67 @@ class SoalTulisController extends Controller
 		}
 		$content = view('main.content.guru.soal-materi.preview',$data)->render();
 		return ['status' => 'success', 'message' => 'Soal berhasil ditemukan', 'content' => $content];
+	}
+
+	public function updateSoal(SoalRequest $request, $id)
+	{
+		$soal = Soal::findOrFail($id);
+		$oldFilePath = $soal->file_soal;
+		$newFilePath = null;
+		$disk = 'public';
+
+		try {
+			if ($request->hasFile('soal_file')) {
+				$file = $request->file('soal_file');
+				$newFilePath = $file->store('soal', $disk);
+
+				if (!$newFilePath) {
+					return Help::resMsg("Gagal menyimpan file baru.", 500);
+				}
+				
+				$request->merge(['file_soal' => $newFilePath]);
+			}
+		} catch (\Exception $e) {
+			CLog::catchError($request->merge(['log_payload' => [
+				'file' => $e->getFile(),
+				'message' => "File upload failed: " . $e->getMessage(),
+				'line' => $e->getLine()
+			]]));
+			return Help::resMsg("Gagal memproses upload file.", 500);
+		}
+
+		DB::beginTransaction();
+		try {
+			
+			if (!Soal::modify($request, $soal)) {
+				DB::rollback();
+				if ($newFilePath) {
+					Storage::disk($disk)->delete($newFilePath);
+				}
+				return Help::resMsg("Gagal mengupdate soal.", 500);
+			}
+
+			DB::commit();
+
+			if ($newFilePath && $oldFilePath) {
+				if (Storage::disk($disk)->exists($oldFilePath)) {
+					Storage::disk($disk)->delete($oldFilePath);
+				}
+			}
+			
+			return Help::resMsg("Berhasil mengupdate soal", 200);
+
+		} catch (\Throwable $e) {
+			DB::rollback();
+			if ($newFilePath) {
+				Storage::disk($disk)->delete($newFilePath);
+			}
+			CLog::catchError($request->merge(['log_payload' => [
+				'file' => $e->getFile(),
+				'message' => $e->getMessage(),
+				'line' => $e->getLine()
+			]]));
+			return Help::resMsg(null, 500);
+		}
 	}
 }
