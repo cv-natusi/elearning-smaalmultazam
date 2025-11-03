@@ -187,14 +187,19 @@ Route::middleware(['auth'])->group(function () {
 
 			# START MASTER > RAPOR
 			Route::controller(AdminRaporController::class)
-				->prefix('rapor')
-				->as('rapor.')
-				->group(function () {
-					Route::get('/', 'main')->name('main');
-					Route::post('/', 'add')->name('add');
-					Route::post('/save', 'save')->name('save');
-					Route::post('/delete', 'delete')->name('delete');
-				});
+            ->prefix('rapor')
+            ->as('rapor.')
+            ->group(function () {
+                Route::get('/', 'main')->name('main');
+                //Route::match(['get','post'], '/iframe-setting', 'iframeSetting')->name('iframe.setting');
+                // GET
+                Route::get('/iframe-setting', [AdminRaporController::class, 'iframeSetting'])->name('iframe.setting');
+
+                // POST
+                Route::post('/iframe-setting', [AdminRaporController::class, 'iframeSettingSave'])->name('iframe.setting.save');
+                //Route::post('/save', 'save')->name('save');
+                //Route::post('/delete', 'delete')->name('delete');
+            });
 			# END MASTER > RAPOR
 
 			# START MASTER > NILAI SISWA
@@ -570,9 +575,9 @@ Route::middleware(['auth'])->group(function () {
 				->as('rapor.')
 				->group(function () {
 					Route::get('/', 'main')->name('main');
-					Route::post('/', 'add')->name('add');
-					Route::post('/save', 'save')->name('save');
-					Route::post('/delete', 'delete')->name('delete');
+					//Route::post('/', 'add')->name('add');
+					// Route::post('/save', 'save')->name('save');
+					// Route::post('/delete', 'delete')->name('delete');
 				});
 			# END MASTER > RAPOR
 
