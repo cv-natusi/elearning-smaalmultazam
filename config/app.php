@@ -177,7 +177,6 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
 
         App\Providers\CustomUrlGeneratorProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
     ],
 

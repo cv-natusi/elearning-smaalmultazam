@@ -73,6 +73,7 @@ Route::controller(AuthController::class)
 # START MIDDLEWARE AUTH
 Route::middleware(['auth'])->group(function () {
 	Route::get('dashboard', [DashboardController::class, 'main'])->name('dashboard');
+	Route::post('download_visitor_data', [DashboardController::class, 'download'])->name('download_visitor_data');
 
 	# START MIDDLEWARE ADMIN
 	Route::middleware(['adminElearning'])
