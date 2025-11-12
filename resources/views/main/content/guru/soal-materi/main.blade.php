@@ -25,14 +25,14 @@
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>Judul Soal</th>
+								<th>Judul File</th>
 								<th>Jenis</th>
 								<th>Nama Mata Pelajaran</th>
 								<th>Guru Pengampu</th>
-								<th>Tanggal Berlaku Soal</th>
-								<th>Jumlah Soal</th>
+								{{-- <th>Tanggal Berlaku Soal</th> --}}
+								{{-- <th>Jumlah Soal</th> --}}
 								<th>File Soal</th>
-								<th>Nilai KKM</th>
+								{{-- <th>Nilai KKM</th> --}}
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -119,13 +119,13 @@
 					return `<p class="m-0 p-1">${data}</p>`
 				}},
 				{data:'judul_soal', name:'judul_soal'},
-				{data:'jenis_file_custom', name:'jenis_file_custom'},
+				{data:'jenis_file.nama', name:'jenis_file.nama', defaultContent: ''},
 				{data:'nama_mapel', name:'nama_mapel'},
 				{data:'nama_guru', name:'nama_guru'},
-				{data:'tanggal', name:'tanggal'},
-				{data:'jumlah_soal', name:'jumlah_soal'},
+				// {data:'tanggal', name:'tanggal'},
+				// {data:'jumlah_soal', name:'jumlah_soal'},
 				{data:'file_soal', name:'file_soal'},
-				{data:'kkm', name:'kkm'},
+				// {data:'kkm', name:'kkm'},
 				{data:'actions', name:'actions'}
 			],
 		})

@@ -79,4 +79,9 @@ class Soal extends Model
 		
 		return $soal->save() ? $soal : false;
 	}
+
+	public function jenisFile()
+    {
+        return $this->belongsTo(MasterJenisFile::class, 'jenis_file');
+    }
 }

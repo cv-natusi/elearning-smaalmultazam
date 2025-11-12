@@ -20,7 +20,7 @@
 								<th>Tanggal Selesai</th>
 								<th>Jumlah Soal</th>
 								<th>Nilai KKM</th>
-								<th>Jenis Soal</th>
+								<th>Jenis</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
