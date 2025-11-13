@@ -33,7 +33,7 @@ class SoalRequest extends FormRequest
             'mapel_id' => 'required',
             'kkm' => 'required|numeric|min:0|max:100',
             'jenis' => 'required|in:1,2',
-            'jenis_file' => 'required|string|in:soal,kisi',
+            'jenis_file' => 'required|numeric',
             'mulai_pengerjaan' => [
                 'required_if:jenis_file,soal',
                 'nullable',

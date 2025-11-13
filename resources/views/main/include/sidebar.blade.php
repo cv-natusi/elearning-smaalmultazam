@@ -184,6 +184,9 @@ if (!isset($title)) {
 					<li class="{{ ($title == 'Data Mapel Pengampu') ? 'mm-active' : ''}}">
 						<a style="color: #fff" href="{{route('admin.mapelPengampu.main')}}"><i class="bx bx-radio-circle"></i>Data Mapel Pengampu</a>
 					</li>
+					<li class="">
+						<a style="color: #fff" href="{{route('admin.jenisFile.main')}}"><i class="bx bx-radio-circle"></i>Data Jenis File</a>
+					</li>
 				</ul>
 			</li>
 			<li class="menu-label">Content</li>

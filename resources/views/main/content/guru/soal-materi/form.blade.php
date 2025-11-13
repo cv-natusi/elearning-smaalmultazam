@@ -21,9 +21,11 @@
 						</div>
 						<div class="col col-md-3">
 							<label for="jenis_file" class="form-label">Jenis</label>
-							<select name="jenis_file" id="jenis_file" class="form-select">
-								<option value="soal" @isset($soal) @if ($soal->jenis_file=='soal') selected @endif @endisset>Soal</option>
-								<option value="kisi" @isset($soal) @if ($soal->jenis_file=='kisi') selected @endif @endisset>Kisi-kisi</option>
+							<select name="jenis_file" id="jenis_file" class="form-control selectpicker select2">
+								<option value="" disabled>-PILIH-</option>
+								@foreach ($jenis_file as $item)
+								<option value="{{$item->id}}" @isset($soal) @if ($soal->jenis_file==$item->id) selected @endif @endisset>{{$item->nama}}</option>
+								@endforeach
 							</select>
 						</div>
 					</div>
@@ -149,7 +151,7 @@
         function toggleSoalFields() {
             var jenisTerpilih = $('#jenis_file').val();
 
-            if (jenisTerpilih === 'soal') {
+            if (jenisTerpilih === '1') {
                 $('.soal-container').show();
             } else {
                 $('.soal-container').hide();

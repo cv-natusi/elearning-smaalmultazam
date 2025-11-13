@@ -6,6 +6,7 @@ use App\Http\Controllers\Elearning\Admin\DataGuruController;
 use App\Http\Controllers\Elearning\Admin\DataKelasController;
 use App\Http\Controllers\Elearning\Admin\DataSiswaController;
 use App\Http\Controllers\Elearning\Admin\DokumenController as AdminDokumenController;
+use App\Http\Controllers\Elearning\Admin\JenisFileController;
 use App\Http\Controllers\Elearning\Admin\KelasSiswaController;
 use App\Http\Controllers\Elearning\Admin\MapelPengampuController;
 use App\Http\Controllers\Elearning\Admin\MataPelajaranController;
@@ -72,6 +73,7 @@ Route::controller(AuthController::class)
 # START MIDDLEWARE AUTH
 Route::middleware(['auth'])->group(function () {
 	Route::get('dashboard', [DashboardController::class, 'main'])->name('dashboard');
+	Route::post('download_visitor_data', [DashboardController::class, 'download'])->name('download_visitor_data');
 
 	# START MIDDLEWARE ADMIN
 	Route::middleware(['adminElearning'])
@@ -241,6 +243,18 @@ Route::middleware(['auth'])->group(function () {
 					Route::post('/delete', 'delete')->name('delete');
 				});
 			# END MASTER > DOKUMEN
+
+			# START MASTER > MAPEL PENGAMPU
+			Route::controller(JenisFileController::class)
+				->prefix('jenis-file')
+				->as('jenisFile.')
+				->group(function () {
+					Route::get('/', 'main')->name('main');
+					Route::post('/', 'add')->name('add');
+					Route::post('/save', 'save')->name('save');
+					Route::post('/delete', 'delete')->name('delete');
+				});
+			# END MASTER > MAPEL PENGAMPU
 		});
 	# END MIDDLEWARE ADMIN
 

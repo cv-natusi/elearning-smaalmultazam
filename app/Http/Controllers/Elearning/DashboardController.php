@@ -18,6 +18,8 @@ use App\Models\Visitor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Auth;
+use App\Exports\VisitorsReportExport; // <-- Tambahkan ini di atas
+use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardController extends Controller
 {
@@ -54,11 +56,9 @@ class DashboardController extends Controller
 				")
 				->where('created_at', '>=', now()->subDays(30))
 				->groupBy('date', 'ip_address');
-
-			// Langkah 2: Query Utama
-			// Sekarang kita hitung hasil dari subquery di atas
+			
 			$visitorData = DB::table(DB::raw("({$subQuery->toSql()}) as sub"))
-				->mergeBindings($subQuery) // Ini penting untuk binding parameter
+				->mergeBindings($subQuery)
 				->selectRaw("
 					sub.date,
 					SUM(CASE WHEN sub.is_user = 0 THEN 1 ELSE 0 END) as guest_visitors,
@@ -75,5 +75,18 @@ class DashboardController extends Controller
 			return view('main.content.admin.dashboard.main', $data);
 		}
 		return view('main.content.dashboard.main');
+	}
+
+	public function download(Request $request)
+	{
+		$request->validate([
+			'kategori' => 'required|in:harian,bulanan,tahunan',
+		]);
+
+		$kategori = $request->kategori;
+		$fileName = "laporan_pengunjung_{$kategori}_" . now()->format('Y-m-d') . ".xlsx";
+
+		// Ini akan men-trigger download file di browser
+		return Excel::download(new VisitorsReportExport($kategori), $fileName);
 	}
 }

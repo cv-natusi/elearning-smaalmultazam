@@ -11,6 +11,7 @@ use App\Models\Pertanyaan;
 use App\Models\PilihanJawaban;
 use App\Models\Soal;
 use App\Models\TahunAjaran;
+use App\Models\MasterJenisFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Libraries\compressFile;
@@ -35,6 +36,7 @@ class SoalTulisController extends Controller
 				->where('user_id', $user_id)
 				->with('mata_pelajaran')
 				->with('guru')
+				->with('jenisFile')
 				->when($request->id_semester!='',function ($q) use ($request) {
 					$q->where('semester',$request->id_semester);
 				})
@@ -117,6 +119,7 @@ class SoalTulisController extends Controller
 		// 		$qq->where('users_id', $user_id);
 		// 	});
 		// })->get();
+		$data['jenis_file'] = MasterJenisFile::all();
 		$data['mataPelajaran'] = MataPelajaran::all();
 		$data['soal'] = Soal::where('id_soal', $request->id)->first();
 		$content = view('main.content.guru.soal-materi.form', $data)->render();
