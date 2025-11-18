@@ -17,6 +17,7 @@ class UjiKompetensiController extends Controller
         if ($request->ajax()) {
             $data = Soal::has('mata_pelajaran')
                 ->with('mata_pelajaran')
+                ->with('jenisFile')
                 ->withCount('pertanyaan')
                 ->whereHas('jenisFile', function ($query) {
                     $query->where('tampil_pada_siswa', 1);

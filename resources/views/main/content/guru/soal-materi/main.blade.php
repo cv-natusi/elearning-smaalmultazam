@@ -31,7 +31,7 @@
 								<th>Guru Pengampu</th>
 								{{-- <th>Tanggal Berlaku Soal</th> --}}
 								{{-- <th>Jumlah Soal</th> --}}
-								<th>File Soal</th>
+								<th>File</th>
 								{{-- <th>Nilai KKM</th> --}}
 								<th>Aksi</th>
 							</tr>

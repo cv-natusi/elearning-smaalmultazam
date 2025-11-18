@@ -15,11 +15,11 @@
 							<tr>
 								<th>No</th>
 								<th>Nama Mata Pelajaran</th>
-								<th>Judul Soal</th>
-								<th>Tanggal Mulai</th>
+								<th>Nama File</th>
+								{{-- <th>Tanggal Mulai</th>
 								<th>Tanggal Selesai</th>
 								<th>Jumlah Soal</th>
-								<th>Nilai KKM</th>
+								<th>Nilai KKM</th> --}}
 								<th>Jenis</th>
 								<th>Aksi</th>
 							</tr>
@@ -120,24 +120,8 @@
 					name: 'judul_soal',
 				},
 				{
-					data: 'mulai_pengerjaan',
-					name: 'mulai_pengerjaan',
-				},
-				{
-					data: 'selesai_pengerjaan',
-					name: 'selesai_pengerjaan',
-				},
-				{
-					data: 'pertanyaan_count',
-					name: 'pertanyaan_count',
-				},
-				{
-					data: 'kkm',
-					name: 'kkm',
-				},
-				{
-					data: 'DT_RowIndex',
-					name: 'DT_RowIndex',
+					data: 'jenis_file.nama',
+					name: 'jenis_file.nama',
 				},
 				{
 					data: 'actions',
