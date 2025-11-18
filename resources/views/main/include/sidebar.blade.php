@@ -250,11 +250,11 @@ if (!isset($title)) {
 					<div class="menu-title">Elearning</div>
 				</a>
 				<ul>
-					<li class="{{ ($title == 'Materi') ? 'mm-active' : ''}}">
+					{{-- <li class="{{ ($title == 'Materi') ? 'mm-active' : ''}}">
 						<a style="color: #fff" href="{{route('guru.materi.main')}}"><i class="bx bx-radio-circle"></i>Materi</a>
-					</li>
+					</li> --}}
 					<li class="{{ ($title == 'Soal') ? 'mm-active' : ''}}">
-						<a style="color: #fff" href="{{route('guru.soalTulis.main')}}"><i class="bx bx-radio-circle"></i>Soal</a>
+						<a style="color: #fff" href="{{route('guru.soalTulis.main')}}"><i class="bx bx-radio-circle"></i>Uji Kompetensi</a>
 					</li>
 					{{-- <li class="{{ ($title == 'Soal Listening') ? 'mm-active' : ''}}">
 						<a style="color: #fff" href="{{route('guru.soalTulis.main')}}"><i class="bx bx-radio-circle"></i>Soal Listening</a>
