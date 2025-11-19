@@ -228,7 +228,11 @@ Route::middleware(['auth'])->group(function () {
 				->as('soal.')
 				->group(function () {
 					Route::get('/', 'main')->name('main');
+					Route::post('/add', 'add')->name('add');
 					Route::post('/preview', 'preview')->name('preview');
+					Route::post('/update/{id_soal}', 'updateSoal')->name('update');
+					Route::delete('/hapus/{id_soal}', 'hapusSoal')->name('hapus');
+					Route::post('/create-soal', 'createSoal')->name('createSoal');
 				});
 			# END MASTER > SOAL
 
@@ -316,6 +320,7 @@ Route::middleware(['auth'])->group(function () {
 					Route::post('/show-nilai', 'showNilai')->name('showNilai');
 					Route::post('/preview', 'preview')->name('preview');
 					Route::post('/update/{id_soal}', 'updateSoal')->name('update');
+					Route::delete('/hapus/{id_soal}', 'hapusSoal')->name('hapus');
 				});
 			# END SOAL TULIS
 

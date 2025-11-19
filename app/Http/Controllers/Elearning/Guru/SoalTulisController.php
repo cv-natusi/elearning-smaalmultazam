@@ -539,4 +539,41 @@ class SoalTulisController extends Controller
 			return Help::resMsg(null, 500);
 		}
 	}
+
+	public function hapusSoal(Request $request, $id)
+	{
+		$soal = Soal::findOrFail($id);
+		$filePath = $soal->file_soal;
+		$disk = 'public';
+
+		DB::beginTransaction();
+		try {
+			$delete = $soal->delete();
+
+			if (!$delete) {
+				DB::rollback();
+				return Help::resMsg("Gagal menghapus data soal.", 500);
+			}
+
+			DB::commit();
+			
+			if ($filePath && Storage::disk($disk)->exists($filePath)) {
+				Storage::disk($disk)->delete($filePath);
+			}
+
+			return Help::resMsg("Berhasil menghapus soal", 200);
+
+		} catch (\Throwable $e) {
+			DB::rollback();
+			
+			CLog::catchError($request->merge(['log_payload' => [
+				'file' => $e->getFile(),
+				'message' => "Delete failed: " . $e->getMessage(),
+				'line' => $e->getLine(),
+				'id_soal' => $id
+			]]));
+
+			return Help::resMsg(null, 500);
+		}
+	}
 }
