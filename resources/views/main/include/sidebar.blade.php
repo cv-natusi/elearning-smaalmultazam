@@ -34,14 +34,14 @@ if (!isset($title)) {
 				</a>
 			</li>
 			<li class="menu-label">Content</li>
-			<li class="{{ ($title == 'Materi Elearning') ? 'mm-active' : ''}}">
+			{{-- <li class="{{ ($title == 'Materi Elearning') ? 'mm-active' : ''}}">
 				<a href="{{route('siswa.materi.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
 					<div class="menu-title">Materi Elearning</div>
 				</a>
-			</li>
+			</li> --}}
 			<li class="{{ ($title == 'Uji Kompetensi') ? 'mm-active' : ''}}">
 				<a href="{{route('siswa.ujiKompetensi.main')}}">
 					<div class="parent-icon">
@@ -104,14 +104,14 @@ if (!isset($title)) {
 				</ul>
 			</li>
 			<li class="menu-label">Content</li>
-			<li class="{{ ($title == 'Materi') ? 'mm-active' : ''}}">
+			{{-- <li class="{{ ($title == 'Materi') ? 'mm-active' : ''}}">
 				<a href="{{route('kepsek.materi.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
 					<div class="menu-title">Materi Elearning</div>
 				</a>
-			</li>
+			</li> --}}
 			<li class="{{ ($title == 'Soal') ? 'mm-active' : ''}}">
 				<a href="{{route('kepsek.soal.main')}}">
 					<div class="parent-icon">
@@ -190,14 +190,14 @@ if (!isset($title)) {
 				</ul>
 			</li>
 			<li class="menu-label">Content</li>
-			<li class="{{ ($title == 'Materi') ? 'mm-active' : ''}}">
+			{{-- <li class="{{ ($title == 'Materi') ? 'mm-active' : ''}}">
 				<a href="{{route('admin.materi.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
 					<div class="menu-title">Materi Elearning</div>
 				</a>
-			</li>
+			</li> --}}
 			<li class="{{ ($title == 'Soal') ? 'mm-active' : ''}}">
 				<a href="{{route('admin.soal.main')}}">
 					<div class="parent-icon">
