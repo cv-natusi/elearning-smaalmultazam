@@ -146,7 +146,7 @@
 <script src="{{ asset('admin/assets/plugins/select2/js/select2.min.js') }}"></script>
 <script>
 	$(document).ready(function () {
-		window.updateSoalUrlTemplate = "{{ route('guru.soalTulis.update', ['id_soal' => ':id']) }}";
+		window.updateSoalUrlTemplate = "{{ route('admin.soal.update', ['id_soal' => ':id']) }}";
 
         function toggleSoalFields() {
             var jenisTerpilih = $('#jenis_file').val();
@@ -294,52 +294,53 @@
 		var data = new FormData($('#formSoal')[0])
 		// var pendahuluan = CKEDITOR.instances.pendahuluan.getData();
 		// data.append('pendahuluan',pendahuluan);
-		$('.btnSimpan').attr('disabled',true).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>LOADING...')
-		$.ajax({
-				url: '{{route("guru.soalTulis.createSoal")}}',
-				type: 'POST',
-				data: data,
-				async: true,
-				cache: false,
-				contentType: false,
-				processData: false,
-				success: function(data){
-					if(data.code==200){
-						Swal.fire({
-							icon: 'success',
-							title: 'Berhasil',
-							text: data.message,
-							showConfirmButton: false,
-							timer: 1200
-						})
-						setTimeout(()=>{
-							$('.other-page').fadeOut(()=>{
-								$('#datatabel').DataTable().ajax.reload()
-								location.reload()
-							})
-						}, 1100);
-						// location.reload()
-					}else{
-						Swal.fire({
-							icon: 'warning',
-							title: 'Whoops',
-							text: data.message,
-							showConfirmButton: false,
-							timer: 1300,
-						})
-					}
-					$('.btnSimpan').attr('disabled',false).html('SIMPAN')
-				}
-			}).fail(()=>{
-				Swal.fire({
-					icon: 'error',
-					title: 'Whoops..',
-					text: 'Terjadi kesalahan silahkan ulangi kembali',
-					showConfirmButton: false,
-					timer: 1300,
-				})
-				$('.btnSimpan').attr('disabled',false).html('SIMPAN')
-			})
+		alert('kon');
+		// $('.btnSimpan').attr('disabled',true).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>LOADING...')
+		// $.ajax({
+		// 		url: '{{route("admin.soal.createSoal")}}',
+		// 		type: 'POST',
+		// 		data: data,
+		// 		async: true,
+		// 		cache: false,
+		// 		contentType: false,
+		// 		processData: false,
+		// 		success: function(data){
+		// 			if(data.code==200){
+		// 				Swal.fire({
+		// 					icon: 'success',
+		// 					title: 'Berhasil',
+		// 					text: data.message,
+		// 					showConfirmButton: false,
+		// 					timer: 1200
+		// 				})
+		// 				setTimeout(()=>{
+		// 					$('.other-page').fadeOut(()=>{
+		// 						$('#datatabel').DataTable().ajax.reload()
+		// 						location.reload()
+		// 					})
+		// 				}, 1100);
+		// 				// location.reload()
+		// 			}else{
+		// 				Swal.fire({
+		// 					icon: 'warning',
+		// 					title: 'Whoops',
+		// 					text: data.message,
+		// 					showConfirmButton: false,
+		// 					timer: 1300,
+		// 				})
+		// 			}
+		// 			$('.btnSimpan').attr('disabled',false).html('SIMPAN')
+		// 		}
+		// 	}).fail(()=>{
+		// 		Swal.fire({
+		// 			icon: 'error',
+		// 			title: 'Whoops..',
+		// 			text: 'Terjadi kesalahan silahkan ulangi kembali',
+		// 			showConfirmButton: false,
+		// 			timer: 1300,
+		// 		})
+		// 		$('.btnSimpan').attr('disabled',false).html('SIMPAN')
+		// 	})
 	})
 
 	$('.btnLanjutkan').click((e) => {

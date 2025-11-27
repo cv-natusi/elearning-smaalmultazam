@@ -13,6 +13,7 @@
 			background-image: url("{{URL::asset('/admin/assets/images/bg-sidebar.png')}}");
 		}
     </style>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <!--startWrapper-->

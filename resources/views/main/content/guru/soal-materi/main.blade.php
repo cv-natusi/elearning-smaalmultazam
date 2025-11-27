@@ -25,12 +25,14 @@
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>Judul Soal</th>
+								<th>Judul File</th>
+								<th>Jenis</th>
 								<th>Nama Mata Pelajaran</th>
 								<th>Guru Pengampu</th>
-								<th>Tanggal Berlaku Soal</th>
-								<th>Jumlah Soal</th>
-								<th>Nilai KKM</th>
+								{{-- <th>Tanggal Berlaku Soal</th> --}}
+								{{-- <th>Jumlah Soal</th> --}}
+								<th>File</th>
+								{{-- <th>Nilai KKM</th> --}}
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -59,6 +61,8 @@
 	var tahunAjaran = {{Illuminate\Support\Js::from($tahunAjaran)}};
 	var kelas = {{Illuminate\Support\Js::from($kelas)}};
 	var mataPelajaran = {{Illuminate\Support\Js::from($mataPelajaran)}};
+
+	var routeDelete = "{{ route('guru.soalTulis.hapus', ':id') }}";
 	
 	$(document).ready(async()=>{
         await dataTable($('#id_tahun_ajaran').val(),$('#id_kelas').val(),$('#id_mapel').val())
@@ -117,11 +121,13 @@
 					return `<p class="m-0 p-1">${data}</p>`
 				}},
 				{data:'judul_soal', name:'judul_soal'},
+				{data:'jenis_file.nama', name:'jenis_file.nama', defaultContent: ''},
 				{data:'nama_mapel', name:'nama_mapel'},
 				{data:'nama_guru', name:'nama_guru'},
-				{data:'tanggal', name:'tanggal'},
-				{data:'jumlah_soal', name:'jumlah_soal'},
-				{data:'kkm', name:'kkm'},
+				// {data:'tanggal', name:'tanggal'},
+				// {data:'jumlah_soal', name:'jumlah_soal'},
+				{data:'file_soal', name:'file_soal'},
+				// {data:'kkm', name:'kkm'},
 				{data:'actions', name:'actions'}
 			],
 		})
@@ -298,6 +304,79 @@
 				timer: 1300,
 			})
 		})
+	}
+
+	function hapusSoal(id) {
+
+		let url = routeDelete.replace(':id', id);
+		const csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+		Swal.fire({
+			title: 'Apakah Anda yakin?',
+			text: "Data soal yang dihapus tidak dapat dikembalikan!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Ya, Hapus!',
+			cancelButtonText: 'Batal'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				
+				Swal.fire({
+					title: 'Menghapus data...',
+					text: 'Mohon tunggu sebentar.',
+					allowOutsideClick: false,
+					didOpen: () => {
+						Swal.showLoading();
+					}
+				});
+
+				$.ajax({
+					url: url,
+					type: 'DELETE',
+					headers: {
+						'X-CSRF-TOKEN': csrfToken
+					},
+					success: function(response) {
+						Swal.close();
+
+						if (response.code == 200) {
+							Swal.fire({
+								icon: 'success',
+								title: 'Berhasil',
+								text: response.message,
+								showConfirmButton: false,
+								timer: 1200
+							});
+							
+							setTimeout(() => {
+								if ($.fn.DataTable.isDataTable('#datatabel')) {
+									$('#datatabel').DataTable().ajax.reload(null, false);
+								} else {
+									location.reload();
+								}
+							}, 1100);
+						} else {
+							Swal.fire(
+								'Gagal!',
+								response.message || 'Terjadi kesalahan saat menghapus.',
+								'error'
+							);
+						}
+					},
+					error: function(xhr) {
+						Swal.close();
+						console.error(xhr.responseText);
+						Swal.fire(
+							'Error Server!',
+							'Gagal menghapus data. Silakan coba lagi.',
+							'error'
+						);
+					}
+				});
+			}
+		});
 	}
 
 </script>

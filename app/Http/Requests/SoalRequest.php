@@ -27,19 +27,45 @@ class SoalRequest extends FormRequest
 	public function rules()
 	{
 		return [
-			'judul_soal' => 'required',
-			'kelas_id' => 'required',
-			'tahun_ajaran_id' => 'required',
-			'mapel_id' => 'required',
-			'kkm' => 'required|min:0|max:100',
-			'mulai_pengerjaan' => 'required',
-			'selesai_pengerjaan' => 'required',
-			'jumlah_soal' => 'required|min:1|max:300',
-			'pendahuluan' => 'required',
-			'jenis' => 'required|in:1,2',
-			'durasi' => 'required',
-			// 'status' => 'required',
-		];
+            'judul_soal' => 'required|string|max:255',
+            'kelas_id' => 'required',
+            'tahun_ajaran_id' => 'required',
+            'mapel_id' => 'required',
+            'kkm' => 'required|numeric|min:0|max:100',
+            'jenis' => 'required|in:1,2',
+            'jenis_file' => 'required|numeric',
+            'mulai_pengerjaan' => [
+                'required_if:jenis_file,soal',
+                'nullable',
+                'date',
+            ],
+            'selesai_pengerjaan' => [
+                'required_if:jenis_file,soal',
+                'nullable',
+                'date',
+                'after_or_equal:mulai_pengerjaan',
+            ],
+            'jumlah_soal' => [
+                'required_if:jenis_file,soal',
+                'nullable',
+                'integer',
+                'min:1',
+                'max:300',
+            ],
+            'durasi' => [
+                'required_if:jenis_file,soal',
+                'nullable',
+                'integer',
+                'min:1',
+            ],
+
+            'file_soal' => [
+                'nullable',
+                'file',
+                'mimes:pdf,docx',
+                'max:10240', // 10MB
+            ],
+        ];
 	}
 
 	public function messages(): array
@@ -57,7 +83,7 @@ class SoalRequest extends FormRequest
 			'jumlah_soal.max' => 'Maksimal Jumlah Soal 300',
 			'kkm.min' => 'Minimal KKM 0',
 			'kkm.max' => 'Maksimal KKM 100',
-			'pendahuluan.required' => 'Pendahuluan Wajib Diisi',
+			// 'pendahuluan.required' => 'Pendahuluan Wajib Diisi',
 			'durasi.required' => 'Durasi Wajib Diisi',
 			// 'status.required' => 'Status Wajib Diisi',
 		];

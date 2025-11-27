@@ -34,14 +34,14 @@ if (!isset($title)) {
 				</a>
 			</li>
 			<li class="menu-label">Content</li>
-			<li class="{{ ($title == 'Materi Elearning') ? 'mm-active' : ''}}">
+			{{-- <li class="{{ ($title == 'Materi Elearning') ? 'mm-active' : ''}}">
 				<a href="{{route('siswa.materi.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
 					<div class="menu-title">Materi Elearning</div>
 				</a>
-			</li>
+			</li> --}}
 			<li class="{{ ($title == 'Uji Kompetensi') ? 'mm-active' : ''}}">
 				<a href="{{route('siswa.ujiKompetensi.main')}}">
 					<div class="parent-icon">
@@ -50,14 +50,14 @@ if (!isset($title)) {
 					<div class="menu-title">Uji Kompetensi</div>
 				</a>
 			</li>
-			<li class="{{ ($title == 'Data Nilai') ? 'mm-active' : ''}}">
+			{{-- <li class="{{ ($title == 'Data Nilai') ? 'mm-active' : ''}}">
 				<a href="{{route('siswa.dataNilai.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
 					<div class="menu-title">Data Nilai</div>
 				</a>
-			</li>
+			</li> --}}
 		@endif
 
 		@if (in_array(Auth::User()->level_user,[2,3,5]))
@@ -104,30 +104,30 @@ if (!isset($title)) {
 				</ul>
 			</li>
 			<li class="menu-label">Content</li>
-			<li class="{{ ($title == 'Materi') ? 'mm-active' : ''}}">
+			{{-- <li class="{{ ($title == 'Materi') ? 'mm-active' : ''}}">
 				<a href="{{route('kepsek.materi.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
 					<div class="menu-title">Materi Elearning</div>
 				</a>
-			</li>
+			</li> --}}
 			<li class="{{ ($title == 'Soal') ? 'mm-active' : ''}}">
 				<a href="{{route('kepsek.soal.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
-					<div class="menu-title">Soal Elearning</div>
+					<div class="menu-title">Uji Kompetensi</div>
 				</a>
 			</li>
-			<li class="{{ ($title == 'Nilai Siswa') ? 'mm-active' : ''}}">
+			{{-- <li class="{{ ($title == 'Nilai Siswa') ? 'mm-active' : ''}}">
 				<a href="{{route('kepsek.nilaiSiswa.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
 					<div class="menu-title">Nilai Siswa</div>
 				</a>
-			</li>
+			</li> --}}
 			<li class="{{ ($title == 'E-RAPOR') ? 'mm-active' : ''}}">
 				<a href="{{route('kepsek.rapor.main')}}">
 					<div class="parent-icon">
@@ -184,33 +184,36 @@ if (!isset($title)) {
 					<li class="{{ ($title == 'Data Mapel Pengampu') ? 'mm-active' : ''}}">
 						<a style="color: #fff" href="{{route('admin.mapelPengampu.main')}}"><i class="bx bx-radio-circle"></i>Data Mapel Pengampu</a>
 					</li>
+					<li class="">
+						<a style="color: #fff" href="{{route('admin.jenisFile.main')}}"><i class="bx bx-radio-circle"></i>Data Jenis File</a>
+					</li>
 				</ul>
 			</li>
 			<li class="menu-label">Content</li>
-			<li class="{{ ($title == 'Materi') ? 'mm-active' : ''}}">
+			{{-- <li class="{{ ($title == 'Materi') ? 'mm-active' : ''}}">
 				<a href="{{route('admin.materi.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
 					<div class="menu-title">Materi Elearning</div>
 				</a>
-			</li>
+			</li> --}}
 			<li class="{{ ($title == 'Soal') ? 'mm-active' : ''}}">
 				<a href="{{route('admin.soal.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
-					<div class="menu-title">Soal Elearning</div>
+					<div class="menu-title">Uji Kompetensi</div>
 				</a>
 			</li>
-			<li class="{{ ($title == 'Nilai Siswa') ? 'mm-active' : ''}}">
+			{{-- <li class="{{ ($title == 'Nilai Siswa') ? 'mm-active' : ''}}">
 				<a href="{{route('admin.nilaiSiswa.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
 					<div class="menu-title">Nilai Siswa</div>
 				</a>
-			</li>
+			</li> --}}
 			<li class="{{ ($title == 'E-RAPOR') ? 'mm-active' : ''}}">
 				<a href="{{route('admin.rapor.main')}}">
 					<div class="parent-icon">
@@ -247,11 +250,11 @@ if (!isset($title)) {
 					<div class="menu-title">Elearning</div>
 				</a>
 				<ul>
-					<li class="{{ ($title == 'Materi') ? 'mm-active' : ''}}">
+					{{-- <li class="{{ ($title == 'Materi') ? 'mm-active' : ''}}">
 						<a style="color: #fff" href="{{route('guru.materi.main')}}"><i class="bx bx-radio-circle"></i>Materi</a>
-					</li>
+					</li> --}}
 					<li class="{{ ($title == 'Soal') ? 'mm-active' : ''}}">
-						<a style="color: #fff" href="{{route('guru.soalTulis.main')}}"><i class="bx bx-radio-circle"></i>Soal</a>
+						<a style="color: #fff" href="{{route('guru.soalTulis.main')}}"><i class="bx bx-radio-circle"></i>Uji Kompetensi</a>
 					</li>
 					{{-- <li class="{{ ($title == 'Soal Listening') ? 'mm-active' : ''}}">
 						<a style="color: #fff" href="{{route('guru.soalTulis.main')}}"><i class="bx bx-radio-circle"></i>Soal Listening</a>
@@ -259,9 +262,9 @@ if (!isset($title)) {
 					{{-- <li class="{{ ($title == 'Pengerjaan Siswa') ? 'mm-active' : ''}}">
 						<a style="color: #fff" href="{{route('main.menuUtama.prestasiSiswa.main')}}"><i class="bx bx-radio-circle"></i>Pengerjaan Siswa</a>
 					</li> --}}
-					<li class="{{ ($title == 'Nilai Siswa') ? 'mm-active' : ''}}">
+					{{-- <li class="{{ ($title == 'Nilai Siswa') ? 'mm-active' : ''}}">
 						<a style="color: #fff" href="{{route('guru.nilaiSiswa.main')}}"><i class="bx bx-radio-circle"></i>Nilai Siswa</a>
-					</li>
+					</li> --}}
 					<li class="{{ ($title == 'E-RAPOR') ? 'mm-active' : ''}}">
 						<a style="color: #fff" href="{{route('guru.rapor.main')}}"><i class="bx bx-radio-circle"></i><i>e-</i> Rapor</a>
 					</li>
@@ -284,14 +287,14 @@ if (!isset($title)) {
 					<div class="menu-title">Jurnal Guru</div>
 				</a>
 			</li>
-			<li class="{{ ($title == 'Praktek Baik Guru') ? 'mm-active' : ''}}">
+			<!-- <li class="{{ ($title == 'Praktek Baik Guru') ? 'mm-active' : ''}}">
 				<a href="{{route('guru.praktekBaikGuru.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
 					<div class="menu-title">Praktek Baik Guru</div>
 				</a>
-			</li>
+			</li> -->
 			@if (Auth::user()->piket)
 				<li class="menu-label">Guru Piket</li>
 				<li class="{{ ($title == 'Jurnal Semua Guru') ? 'mm-active' : ''}}">

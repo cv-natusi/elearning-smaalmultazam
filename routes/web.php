@@ -6,6 +6,7 @@ use App\Http\Controllers\Elearning\Admin\DataGuruController;
 use App\Http\Controllers\Elearning\Admin\DataKelasController;
 use App\Http\Controllers\Elearning\Admin\DataSiswaController;
 use App\Http\Controllers\Elearning\Admin\DokumenController as AdminDokumenController;
+use App\Http\Controllers\Elearning\Admin\JenisFileController;
 use App\Http\Controllers\Elearning\Admin\KelasSiswaController;
 use App\Http\Controllers\Elearning\Admin\MapelPengampuController;
 use App\Http\Controllers\Elearning\Admin\MataPelajaranController;
@@ -72,6 +73,7 @@ Route::controller(AuthController::class)
 # START MIDDLEWARE AUTH
 Route::middleware(['auth'])->group(function () {
 	Route::get('dashboard', [DashboardController::class, 'main'])->name('dashboard');
+	Route::post('download_visitor_data', [DashboardController::class, 'download'])->name('download_visitor_data');
 
 	# START MIDDLEWARE ADMIN
 	Route::middleware(['adminElearning'])
@@ -187,14 +189,19 @@ Route::middleware(['auth'])->group(function () {
 
 			# START MASTER > RAPOR
 			Route::controller(AdminRaporController::class)
-				->prefix('rapor')
-				->as('rapor.')
-				->group(function () {
-					Route::get('/', 'main')->name('main');
-					Route::post('/', 'add')->name('add');
-					Route::post('/save', 'save')->name('save');
-					Route::post('/delete', 'delete')->name('delete');
-				});
+            ->prefix('rapor')
+            ->as('rapor.')
+            ->group(function () {
+                Route::get('/', 'main')->name('main');
+                //Route::match(['get','post'], '/iframe-setting', 'iframeSetting')->name('iframe.setting');
+                // GET
+                Route::get('/iframe-setting', [AdminRaporController::class, 'iframeSetting'])->name('iframe.setting');
+
+                // POST
+                Route::post('/iframe-setting', [AdminRaporController::class, 'iframeSettingSave'])->name('iframe.setting.save');
+                //Route::post('/save', 'save')->name('save');
+                //Route::post('/delete', 'delete')->name('delete');
+            });
 			# END MASTER > RAPOR
 
 			# START MASTER > NILAI SISWA
@@ -221,7 +228,11 @@ Route::middleware(['auth'])->group(function () {
 				->as('soal.')
 				->group(function () {
 					Route::get('/', 'main')->name('main');
+					Route::post('/add', 'add')->name('add');
 					Route::post('/preview', 'preview')->name('preview');
+					Route::post('/update/{id_soal}', 'updateSoal')->name('update');
+					Route::delete('/hapus/{id_soal}', 'hapusSoal')->name('hapus');
+					Route::post('/create-soal', 'createSoal')->name('createSoal');
 				});
 			# END MASTER > SOAL
 
@@ -236,6 +247,18 @@ Route::middleware(['auth'])->group(function () {
 					Route::post('/delete', 'delete')->name('delete');
 				});
 			# END MASTER > DOKUMEN
+
+			# START MASTER > MAPEL PENGAMPU
+			Route::controller(JenisFileController::class)
+				->prefix('jenis-file')
+				->as('jenisFile.')
+				->group(function () {
+					Route::get('/', 'main')->name('main');
+					Route::post('/', 'add')->name('add');
+					Route::post('/save', 'save')->name('save');
+					Route::post('/delete', 'delete')->name('delete');
+				});
+			# END MASTER > MAPEL PENGAMPU
 		});
 	# END MIDDLEWARE ADMIN
 
@@ -296,6 +319,8 @@ Route::middleware(['auth'])->group(function () {
 					Route::post('/store-pertanyaan-file', 'storePertanyaanFile')->name('storePertanyaanFile');
 					Route::post('/show-nilai', 'showNilai')->name('showNilai');
 					Route::post('/preview', 'preview')->name('preview');
+					Route::post('/update/{id_soal}', 'updateSoal')->name('update');
+					Route::delete('/hapus/{id_soal}', 'hapusSoal')->name('hapus');
 				});
 			# END SOAL TULIS
 
@@ -570,9 +595,9 @@ Route::middleware(['auth'])->group(function () {
 				->as('rapor.')
 				->group(function () {
 					Route::get('/', 'main')->name('main');
-					Route::post('/', 'add')->name('add');
-					Route::post('/save', 'save')->name('save');
-					Route::post('/delete', 'delete')->name('delete');
+					//Route::post('/', 'add')->name('add');
+					// Route::post('/save', 'save')->name('save');
+					// Route::post('/delete', 'delete')->name('delete');
 				});
 			# END MASTER > RAPOR
 
