@@ -50,14 +50,14 @@ if (!isset($title)) {
 					<div class="menu-title">Uji Kompetensi</div>
 				</a>
 			</li>
-			<li class="{{ ($title == 'Data Nilai') ? 'mm-active' : ''}}">
+			{{-- <li class="{{ ($title == 'Data Nilai') ? 'mm-active' : ''}}">
 				<a href="{{route('siswa.dataNilai.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
 					<div class="menu-title">Data Nilai</div>
 				</a>
-			</li>
+			</li> --}}
 		@endif
 
 		@if (in_array(Auth::User()->level_user,[2,3,5]))
@@ -117,17 +117,17 @@ if (!isset($title)) {
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
-					<div class="menu-title">Soal Elearning</div>
+					<div class="menu-title">Uji Kompetensi</div>
 				</a>
 			</li>
-			<li class="{{ ($title == 'Nilai Siswa') ? 'mm-active' : ''}}">
+			{{-- <li class="{{ ($title == 'Nilai Siswa') ? 'mm-active' : ''}}">
 				<a href="{{route('kepsek.nilaiSiswa.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
 					<div class="menu-title">Nilai Siswa</div>
 				</a>
-			</li>
+			</li> --}}
 			<li class="{{ ($title == 'E-RAPOR') ? 'mm-active' : ''}}">
 				<a href="{{route('kepsek.rapor.main')}}">
 					<div class="parent-icon">
@@ -203,17 +203,17 @@ if (!isset($title)) {
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
-					<div class="menu-title">Soal Elearning</div>
+					<div class="menu-title">Uji Kompetensi</div>
 				</a>
 			</li>
-			<li class="{{ ($title == 'Nilai Siswa') ? 'mm-active' : ''}}">
+			{{-- <li class="{{ ($title == 'Nilai Siswa') ? 'mm-active' : ''}}">
 				<a href="{{route('admin.nilaiSiswa.main')}}">
 					<div class="parent-icon">
 						<i style="color: #fff" class='bx bx-file'></i>
 					</div>
 					<div class="menu-title">Nilai Siswa</div>
 				</a>
-			</li>
+			</li> --}}
 			<li class="{{ ($title == 'E-RAPOR') ? 'mm-active' : ''}}">
 				<a href="{{route('admin.rapor.main')}}">
 					<div class="parent-icon">
@@ -262,9 +262,9 @@ if (!isset($title)) {
 					{{-- <li class="{{ ($title == 'Pengerjaan Siswa') ? 'mm-active' : ''}}">
 						<a style="color: #fff" href="{{route('main.menuUtama.prestasiSiswa.main')}}"><i class="bx bx-radio-circle"></i>Pengerjaan Siswa</a>
 					</li> --}}
-					<li class="{{ ($title == 'Nilai Siswa') ? 'mm-active' : ''}}">
+					{{-- <li class="{{ ($title == 'Nilai Siswa') ? 'mm-active' : ''}}">
 						<a style="color: #fff" href="{{route('guru.nilaiSiswa.main')}}"><i class="bx bx-radio-circle"></i>Nilai Siswa</a>
-					</li>
+					</li> --}}
 					<li class="{{ ($title == 'E-RAPOR') ? 'mm-active' : ''}}">
 						<a style="color: #fff" href="{{route('guru.rapor.main')}}"><i class="bx bx-radio-circle"></i><i>e-</i> Rapor</a>
 					</li>
